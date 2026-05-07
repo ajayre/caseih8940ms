@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CaseIH8940MS"
+             x:Class="CaseIH8940MS.MainPage"
+             Title="Schedule"
+             Shell.NavBarIsVisible="True"
+             Shell.NavBarHasShadow="False"
+             SafeAreaEdges="All">
+
+    <Grid x:Name="RootGrid">
+        <Border x:Name="DeviceBezel"
+                StrokeThickness="0"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0" />
+            </Border.StrokeShape>
+            <Border x:Name="ScreenBorder"
+                    Padding="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource IosGroupedBackground}, Dark={StaticResource IosGroupedBackgroundDark}}"
+                    StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="0" />
+                </Border.StrokeShape>
+                <Grid RowDefinitions="Auto,Auto,Auto,*">
+                    <Grid Grid.Row="0"
+                          ColumnDefinitions="*,Auto"
+                          Padding="8,12,12,4">
+                        <ImageButton Grid.Column="1"
+                                     Source="gear.png"
+                                     BackgroundColor="Transparent"
+                                     WidthRequest="44"
+                                     HeightRequest="44"
+                                     CornerRadius="8"
+                                     Padding="8"
+                                     Clicked="OnSettingsClicked"
+                                     SemanticProperties.Description="Open settings" />
+                    </Grid>
+
+                    <VerticalStackLayout Grid.Row="1"
+                                         Padding="20,4,20,8"
+                                         Spacing="8">
+                        <Label Text="Current Hours"
+                               FontSize="13"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                               Margin="4,0,0,0" />
+                        <Grid ColumnDefinitions="*,Auto"
+                              ColumnSpacing="10">
+                            <Border Grid.Column="0"
+                                    StrokeThickness="0"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource IosCellBackground}, Dark={StaticResource IosCellBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 10"
+                                    VerticalOptions="Center">
+                                <Entry x:Name="CurrentHoursEntry"
+                                       Margin="12,2"
+                                       Placeholder="0.0"
+                                       Keyboard="Default"
+                                       ReturnType="Done"
+                                       BackgroundColor="Transparent"
+                                       SemanticProperties.Hint="Current clock in decimal hours"
+                                       Completed="OnCurrentHoursCompleted" />
+                            </Border>
+                            <Button Grid.Column="1"
+                                    Text="Apply"
+                                    Clicked="OnApplyCurrentHoursClicked"
+                                    VerticalOptions="Center"
+                                    SemanticProperties.Description="Apply current hours value" />
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <Grid Grid.Row="2" RowDefinitions="Auto,1">
+                        <Grid Grid.Row="0"
+                              ColumnDefinitions="*,76,52,52"
+                              Padding="12,8,12,6"
+                              BackgroundColor="{AppThemeBinding Light={StaticResource IosCellBackground}, Dark={StaticResource IosCellBackgroundDark}}">
+                            <Label Grid.Column="0"
+                                   Text="Description"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                            <Label Grid.Column="1"
+                                   Text="Activity"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"
+                                   Margin="4,0,0,0" />
+                            <Label Grid.Column="2"
+                                   Text="Page"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="End"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"
+                                   Margin="8,0,0,0" />
+                            <Label Grid.Column="3"
+                                   Text="Time"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="End"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                        </Grid>
+                        <BoxView Grid.Row="1"
+                                 HeightRequest="1"
+                                 Color="{AppThemeBinding Light={StaticResource IosSeparator}, Dark={StaticResource IosSeparatorDark}}" />
+                    </Grid>
+
+                    <CollectionView x:Name="ScheduleCollectionView"
+                                    Grid.Row="3"
+                                    SelectionMode="None"
+                                    VerticalScrollBarVisibility="Default">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="local:ScheduleRowViewModel">
+                                <Grid ColumnDefinitions="*,76,52,52"
+                                      Padding="12,10"
+                                      MinimumHeightRequest="48"
+                                      BackgroundColor="{Binding RowBackground}">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Description}"
+                                           TextColor="{Binding TextColor}"
+                                           FontSize="14"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="2"
+                                           VerticalTextAlignment="Center" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Activity}"
+                                           TextColor="{Binding TextColor}"
+                                           FontSize="14"
+                                           LineBreakMode="TailTruncation"
+                                           Margin="4,0,0,0"
+                                           VerticalTextAlignment="Center" />
+                                    <Label Grid.Column="2"
+                                           Text="{Binding Page}"
+                                           TextColor="{Binding TextColor}"
+                                           FontSize="14"
+                                           HorizontalTextAlignment="End"
+                                           VerticalTextAlignment="Center"
+                                           Margin="8,0,0,0" />
+                                    <Label Grid.Column="3"
+                                           Text="{Binding RelativeTimeText}"
+                                           TextColor="{Binding TextColor}"
+                                           FontSize="14"
+                                           HorizontalTextAlignment="End"
+                                           VerticalTextAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Border>
+        </Border>
+    </Grid>
+</ContentPage>

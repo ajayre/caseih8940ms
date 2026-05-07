@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CaseIH8940MS.SettingsPage"
+             Title="Settings"
+             Shell.NavBarIsVisible="False"
+             SafeAreaEdges="All">
+
+    <Grid RowDefinitions="Auto,*"
+          BackgroundColor="{AppThemeBinding Light={StaticResource IosGroupedBackground}, Dark={StaticResource IosGroupedBackgroundDark}}">
+
+        <!-- Compact nav: title truly centered; back overlaid on the left (iOS-style). -->
+        <Grid Grid.Row="0"
+              RowDefinitions="Auto,1"
+              BackgroundColor="{AppThemeBinding Light={StaticResource IosGroupedBackground}, Dark={StaticResource IosGroupedBackgroundDark}}">
+            <Grid Grid.Row="0"
+                  MinimumHeightRequest="48"
+                  Padding="0,8,0,6">
+                <Label Text="Settings"
+                       FontSize="17"
+                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       InputTransparent="True" />
+
+                <Border StrokeThickness="0"
+                        BackgroundColor="Transparent"
+                        Padding="12,0,16,0"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Fill">
+                    <Label Text="&#x2039; Back"
+                           TextColor="{StaticResource Primary}"
+                           FontSize="17"
+                           VerticalOptions="Center"
+                           VerticalTextAlignment="Center"
+                           SemanticProperties.Description="Go back" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </Grid>
+
+            <BoxView Grid.Row="1"
+                     HeightRequest="1"
+                     Color="{AppThemeBinding Light={StaticResource IosSeparator}, Dark={StaticResource IosSeparatorDark}}"
+                     Opacity="0.9" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,24,20,16"
+                                 Spacing="8">
+                <Label Text="Starting Hours"
+                       FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                       Margin="4,0,0,2" />
+                <Border StrokeThickness="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource IosCellBackground}, Dark={StaticResource IosCellBackgroundDark}}"
+                        StrokeShape="RoundRectangle 10">
+                    <Entry x:Name="HoursEntry"
+                           Margin="12,2"
+                           Placeholder="0.0"
+                           Keyboard="Default"
+                           ReturnType="Done"
+                           BackgroundColor="Transparent"
+                           SemanticProperties.Hint="Hours with one decimal place"
+                           Completed="OnHoursEntryCompleted"
+                           Unfocused="OnHoursEntryUnfocused" />
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
